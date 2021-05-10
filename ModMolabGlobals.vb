@@ -18,6 +18,7 @@ Module ModMolabGlobals
     '1.0.1.3 25.10.17 Må ikke ha message box
     '1.0.1.4 08.01.18 Ingen ting.  Kun test Team Explorter  Se notatblokken til Magne : _Net Sync version Control
     '1.0.1.5 06.05.21 Mulighet for å sjekke at mapping er ok.
+    '1.0.2.0 10.05.21 Over til VS 2019 og Microsoft Visual Studio Installer 
     '*************************************************
     '1.6.4 definition
     Structure NotElmsData
@@ -32,7 +33,7 @@ Module ModMolabGlobals
     '1.0.0.3 Public gNotElms(2) As NotElmsData ' 1.6.7
     Public gNotElms As NotElmsData ' 1.6.7
 
-    Public Const APP_NAME As String = "Molab2Lims 1.0.1.5"
+    Public Const APP_NAME As String = "Molab2Lims 1.0.2.0"
     Public gNoErrorHandling As Boolean
     Public gNoConfirm As Boolean
     Public gNoSave As Boolean
@@ -153,7 +154,7 @@ Module ModMolabGlobals
         PrintLine(lFileNumber, lMess & " " & pMess)
         FileClose(lFileNumber)
     End Sub
-    Public Sub getServInfo()
+    Public Sub GetServInfo()
         Dim lPwd As String
         If Not gNoErrorHandling Then On Error GoTo Err_getServInfo
         Dim rst As ADODB.Recordset

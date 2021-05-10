@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 
 
 <Assembly: AssemblyTitle("Transfering data from Molab files to Oracle.")>
-<Assembly: AssemblyDescription("06.05.21 magne.larsen@litc.no")>
+<Assembly: AssemblyDescription("10.05.21 magne.larsen@litc.no")>
 <Assembly: AssemblyCompany("Larsen It Consult AS")>
 <Assembly: AssemblyProduct("")>
 <Assembly: AssemblyCopyright("Elkem")>
@@ -29,6 +29,6 @@ Imports System.Runtime.InteropServices
 ' You can specify all the values or you can default the Build and Revision Numbers
 ' by using the '*' as shown below:
 
-<Assembly: AssemblyVersion("1.0.1.5")>
+<Assembly: AssemblyVersion("1.0.2.0")>
 <Assembly: Guid("76584716-f58c-491b-a550-996cf2d2362c")>
-<Assembly: AssemblyFileVersion("1.0.1.5")>
+<Assembly: AssemblyFileVersion("1.0.2.0")>

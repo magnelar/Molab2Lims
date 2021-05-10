@@ -26,9 +26,10 @@ Module ModMolabDb
                 End If
                 If gServer.Connected = True Then
                     gServer.TransFlag = 1
-                    Dim cmd As New OracleCommand
-                    cmd.Connection = conn
-                    cmd.CommandText = sQuery
+                    Dim cmd As New OracleCommand With {
+                        .Connection = conn,
+                        .CommandText = sQuery
+                    }
                     cmd.ExecuteNonQuery()
                     conn.Close()
                     cmd = Nothing
@@ -70,18 +71,21 @@ Module ModMolabDb
                         '.CommandType = ADODB.CommandTypeEnum.adCmdStoredProc
                         .CommandType = CommandType.StoredProcedure
                         Dim p(2) As OracleParameter
-                        p(0) = New OracleParameter()
-                        p(0).OracleDbType = OracleDbType.Varchar2
-                        p(0).ParameterName = "p_methcode"
-                        p(0).Value = pMethcode
-                        p(1) = New OracleParameter()
-                        p(1).OracleDbType = OracleDbType.Varchar2
-                        p(1).ParameterName = "p_ident"
-                        p(1).Value = pSmess
-                        p(2) = New OracleParameter()
-                        p(2).OracleDbType = OracleDbType.Varchar2
-                        p(2).ParameterName = "p_deforgunit"
-                        p(2).Value = gOrgUnit
+                        p(0) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Varchar2,
+                            .ParameterName = "p_methcode",
+                            .Value = pMethcode
+                        }
+                        p(1) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Varchar2,
+                            .ParameterName = "p_ident",
+                            .Value = pSmess
+                        }
+                        p(2) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Varchar2,
+                            .ParameterName = "p_deforgunit",
+                            .Value = gOrgUnit
+                        }
 
                         .Parameters.Add(p(0))
                         .Parameters.Add(p(1))
@@ -164,27 +168,31 @@ Err_StoreSamp:
                         End If
                         .CommandType = CommandType.StoredProcedure
                         Dim p(4) As OracleParameter
-                        p(0) = New OracleParameter()
-                        p(0).OracleDbType = OracleDbType.Varchar2
                         'p(0).Direction = ParameterDirection.InputOutput
-                        p(0).ParameterName = "p_kanal"
-                        p(0).Value = pKanal
+                        p(0) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Varchar2,
+                            .ParameterName = "p_kanal",
+                            .Value = pKanal
+                        }
 
-                        p(1) = New OracleParameter()
                         '1.0.3.3 
-                        p(1).OracleDbType = OracleDbType.Double
-                        p(1).ParameterName = "p_value"
-                        p(1).Value = pvalue
+                        p(1) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Double,
+                            .ParameterName = "p_value",
+                            .Value = pvalue
+                        }
 
-                        p(2) = New OracleParameter()
-                        p(2).OracleDbType = OracleDbType.Varchar2
-                        p(2).ParameterName = "p_compound"
-                        p(2).Value = pCompound
+                        p(2) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Varchar2,
+                            .ParameterName = "p_compound",
+                            .Value = pCompound
+                        }
 
-                        p(3) = New OracleParameter()
-                        p(3).OracleDbType = OracleDbType.Varchar2
-                        p(3).ParameterName = "p_parinfo"
-                        p(3).Value = pParInfo
+                        p(3) = New OracleParameter With {
+                            .OracleDbType = OracleDbType.Varchar2,
+                            .ParameterName = "p_parinfo",
+                            .Value = pParInfo
+                        }
 
                         .Parameters.Add(p(0))
                         .Parameters.Add(p(1))
@@ -202,7 +210,7 @@ Err_StoreSamp:
                         .ExecuteNonQuery()
                         gServer.TransFlag = 3
                         p = Nothing
-                        gServer.NCMess = gServer.NCMess + 1
+                        gServer.NCMess += 1
                     End With
                     cmdNewSamp = Nothing
                 End If
@@ -230,7 +238,6 @@ Err_StoreRes:
         '** Ny ifm Molab2Lims 07.06.17 1.0.1.2
         '** ******************************
         Dim lSql As String = String.Empty
-        Dim sMethCode As String = String.Empty
         MethCodeExist = False
         Try
             If gFullSQLLog Then Call SQLLog(lSql)
@@ -250,7 +257,7 @@ Err_StoreRes:
             'rstSampCode.Open(lSql, oradb, , , ADODB.CommandTypeEnum.adCmdUnknown)
             'Do Until rstSampCode.EOF
             If dr.HasRows Then
-                sMethCode = dr.Item("METHCODE")
+                Dim sMethCode As String = dr.Item("METHCODE")
                 MethCodeExist = True
             Else
                 MethCodeExist = False
@@ -266,9 +273,7 @@ Err_StoreRes:
         '** Ny ifm Molab2Lims 09.03.17
         '** ******************************
         Dim lSql As String = String.Empty
-        Dim liFrom As Integer = 0
-        Dim liTo As Integer = 0
-        GetIdentLen = 0
+
         Try
             If gFullSQLLog Then Call SQLLog(lSql)
             lSql = "SELECT from_pos,to_pos FROM ELP_IDENT P,ELP_METH M,ELP_INSTR I  WHERE M.INSTR_CODE = I.INSTR_CODE  AND I.IDENT_CODE = P.IDENT_CODE "
@@ -286,8 +291,8 @@ Err_StoreRes:
             'cmd.CommandType = CommandType.Text
             Dim dr As OracleDataReader = cmd.ExecuteReader()
             dr.Read()
-            liFrom = dr.Item(0)
-            liTo = dr.Item(1)
+            Dim liFrom As Integer = dr.Item(0)
+            Dim liTo As Integer = dr.Item(1)
             If giPrevToPos > 0 Then
                 giPrevDiff = liFrom - giPrevToPos
             Else

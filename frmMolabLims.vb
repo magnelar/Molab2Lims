@@ -78,7 +78,7 @@ Friend Class frmMain
 
         '1.0.5.1 flyttet getServInfo for de som har server.dat får glede av den.
         If Not File.Exists(sFileName) Then
-            Call getServInfo()
+            Call GetServInfo()
             Call WriteIniFile()
         End If
         Call ReadIniFil()
